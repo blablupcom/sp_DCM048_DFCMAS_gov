@@ -84,7 +84,7 @@ def convert_mth_strings ( mth_string ):
 #### VARIABLES 1.0
 
 entity_id = "DCM048_DFCMAS_gov"
-url = "https://www.gov.uk/government/publications/transactions-over-25k-2013-2014"
+url = "https://www.gov.uk/government/publications/dcms-transactions-over-25000-201617"
 errors = 0
 data = []
 
@@ -96,23 +96,6 @@ soup = BeautifulSoup(html, 'lxml')
 
 #### SCRAPE DATA
 
-blocks = soup.findAll('div', {'class':'attachment-details'})
-
-for block in blocks:
-    link = block.a['href']
-    title = block.h2.contents[0]
-    if hasattr(title,"href"):
-        title = title.text.strip()
-    csvUrl = link.replace("/preview","")
-    csvUrl = csvUrl.replace("/government","http://www.gov.uk/government")
-    csvYr = title.split(' ')[-1]
-    csvMth = title.split(' ')[-2][:3]
-    csvMth = convert_mth_strings(csvMth.upper())
-    data.append([csvYr, csvMth, csvUrl])
-
-
-html = urllib2.urlopen('https://www.gov.uk/government/publications/dcms-transactions-over-25000-2015-16')
-soup = BeautifulSoup(html, 'lxml')
 blocks = soup.findAll('div', {'class':'attachment-details'})
 
 for block in blocks:
